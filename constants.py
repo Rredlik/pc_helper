@@ -1,0 +1,1 @@
+BROWTHER_PATH = 'C:\\Users\\m.dostovalov\\AppData\\Local\\Yandex\\YandexBrowser\\Application\\browser.exe'
