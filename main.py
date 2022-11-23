@@ -28,7 +28,7 @@ def main():
 
 
 if __name__ == '__main__':
-    # main()
-    check_process()
+    main()
+    # check_process()
     # # subprocess.process_exists('calculator.exe')
     # print('\n\n\n\n', processes)

@@ -7,8 +7,8 @@ from speaker import speak
 
 def start_browser():
     try:
-        os.system(f'start {BROWTHER_PATH}')
         speak("Запускаю браузер")
+        os.system(f'start {BROWTHER_PATH}')
     except:
         print('Error')
 
