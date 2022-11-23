@@ -1,16 +1,14 @@
 import asyncio
 
 import wmi
-PRIORITY_PROGRAMS = {
-    'programs': ['Calculator.exe']
-}
+PRIORITY_PROGRAMS = ['Calculator.exe']
 
 f = wmi.WMI()
 
 
-async def processes(priority_pr):
+async def processes():
     for process in f.Win32_Process():
-        if process.Name in PRIORITY_PROGRAMS['programs']:
+        if process.Name in PRIORITY_PROGRAMS:
             print(f'{process.ProcessID:<10} {process.Name}')
 
 
@@ -27,5 +25,10 @@ async def processes(priority_pr):
 #             print(f'######## {el} ########')
 
 if __name__ == '__main__':
-    asyncio.run(processes())
+    # asyncio.run(processes())
+    print(f)
+    # for my_computer in f:
+    #     print(my_computer)
+
+
 
