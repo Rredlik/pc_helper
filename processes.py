@@ -1,8 +1,9 @@
 import asyncio
 import os
 import subprocess
-
 import wmi
+
+
 PRIORITY_PROGRAMS = ['Calculator.exe']
 
 f = wmi.WMI()
@@ -21,14 +22,23 @@ def start_browser(close_program):
         _procces = str(_procces).split('\\r\\n')
 
         for el in _procces:
-            element = el.split(',')[0].replace('"', '')
-            programs_in_work.append(element)
-            if element == close_program:
-                print(f"Закрываю программу {close_program}")
+            cur_process = el.split(',')
 
-    except:
+            if len(cur_process) == 5:
+                element = cur_process[0].replace('"', '').lower()
+                element_pid = cur_process[1].replace('"', '')
+                # print(f"element_pid: {element_pid} {element}\n")
 
-        print('Error')
+                programs_in_work.append([element, element_pid])
+
+                if element == close_program.lower():
+                    print(f"Закрываю {element_pid} {element}\n")
+
+                    subprocess.call(f"taskkill /pid {element_pid}")
+
+    except exec() as er:
+
+        print('Error: ', er)
 
 
 # async def processes():
