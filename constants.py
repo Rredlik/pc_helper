@@ -1,1 +1,14 @@
-BROWTHER_PATH = 'C:\\Users\\m.dostovalov\\AppData\\Local\\Yandex\\YandexBrowser\\Application\\browser.exe'
+commands_dict = {
+    'commands': {
+        'cancel': ['отмена комманды', 'отмена', 'не слушай', 'отдыхай'],
+        'greeting': ['привет', 'здравствуй', 'запуск'],
+        'start_pubg': ['запусти pubg', 'запусти плеер анонс батлграунд', 'запусти плеер анонс battleground'],
+        'parting': ['пока', 'до свидания', 'выключение'],
+        'check_process': ['работающие программы'],
+        'start_browser': ['открой браузер', 'запусти яндекс', 'открой яндекс', 'запусти браузер', 'браузер'],
+        'start_vkcom': ['открой вк', 'запусти вконтакте', 'открой вконтакте', 'запусти вк',
+                        'запусти в контакте', 'открой в контакте']
+    }
+}
+
+BROWTHER_PATH = 'C:\\Users\\rredl\\AppData\\Local\\Yandex\\YandexBrowser\\Application\\browser.exe'

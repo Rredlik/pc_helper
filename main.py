@@ -1,13 +1,16 @@
 import asyncio
 import os
 import subprocess
+import speech_recognition
 
 from browser import *
 from processes import processes
 from speaker import speak
+from constants import commands_dict
 
 
-
+sr = speech_recognition.Recognizer()
+sr.pause_threshold = 0.5
 
 
 def check_process():
@@ -18,39 +21,6 @@ def check_process():
         print('Error')
 
 
-
-def main():
-    query = input()
-    if query == 'браузер':
-        start_browser()
-    elif query == 'открой вк' or 'вк':
-        start_vkcom()
-
-
-if __name__ == '__main__':
-    # main()
-    check_process()
-    # # subprocess.process_exists('calculator.exe')
-    # print('\n\n\n\n', processes)
-
-import speech_recognition
-
-sr = speech_recognition.Recognizer()
-sr.pause_threshold = 0.5
-
-commands_dict = {
-    # 'main_command':{
-    #     ['']
-    # },
-    'commands': {
-        'cancel': ['отмена комманды', 'отмена', 'не слушай', 'отдыхай'],
-        'greeting': ['привет', 'здравствуй', 'запуск'],
-        'start_pubg': ['запусти pubg', 'запусти плеер анонс батлграунд', 'запусти плеер анонс battleground'],
-        'parting': ['пока', 'до свидания', 'выключение']
-    }
-}
-
-
 def listen_command():
     try:
         with speech_recognition.Microphone() as mic:
@@ -59,31 +29,35 @@ def listen_command():
             query = sr.recognize_google(audio_data=audio, language='ru-RU').lower()
         return query
     except speech_recognition.UnknownValueError:
-        return "Неизвестная комманда"
+        speak("Неизвестная комманда")
 
 
 def greeting():
-    print("Привет, бро!")
+    speak("Привет, бро!")
 
 
 def start_pubg():
-    print("Запускаю пубг")
+    speak("Запускаю пубг")
 
 
 def cancel():
-    print("Отдыхаю")
+    speak("Отдыхаю")
 
 
 def main():
+    print('жду команду')
     query = listen_command()
     print(f'query: {query}')
+    # if query == 'остановись':
+    #     return False
     for commands, text in commands_dict['commands'].items():
-        print(f'text: {text}')
-        if query in commands:
-            print(f'commands: {commands}')
+        # print(f'text: {text}')
+        if query in text:
+            # print(f'commands: {commands}')
             globals()[commands]()
-            break
 
 
 if __name__ == "__main__":
-    main()
+    cycle = True
+    while cycle:
+        cycle = main()
