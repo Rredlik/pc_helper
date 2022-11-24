@@ -1,8 +1,6 @@
-import time
-
-import pyttsx3
 import torch
 import sounddevice as sd
+import time
 
 language = 'ru'
 model_id = 'ru_v3'
@@ -16,16 +14,23 @@ device = torch.device('cpu')  # or gpu
 model, _ = torch.hub.load(repo_or_dir='snakers4/silero-models',
                           model='silero_tts',
                           language=language,
-                          speaker=model_id)
+                          speaker=model_id,
+                          trust_repo=True)
 model.to(device)
 
 
-def speak(text: str):
+def va_speak(text: str):
+
     _audio = model.apply_tts(text=f'{text}..',
                              speaker=speaker,
                              sample_rate=sample_rate,
                              put_accent=put_accent,
                              put_yo=put_yo)
     sd.play(_audio, sample_rate)
-    time.sleep(len(_audio) / sample_rate)
+    time.sleep(len(_audio) / (sample_rate / 2))
     sd.stop()
+
+
+if __name__ == '__main__':
+    print('start')
+    va_speak("Привет")

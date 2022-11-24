@@ -1,6 +1,4 @@
 import asyncio
-import os
-import subprocess
 import speech_recognition
 from fuzzywuzzy import fuzz
 import datetime
@@ -8,15 +6,13 @@ import datetime
 import webbrowser
 import random
 
-
+import constants
 import listener
+import speaker
 from browser import *
 from processes import processes
-from speaker import speak
+from speaker import va_speak
 from constants import COMMAND_DICT
-
-
-
 
 sr = speech_recognition.Recognizer()
 sr.pause_threshold = 0.5
@@ -25,7 +21,7 @@ sr.pause_threshold = 0.5
 def check_process():
     try:
         asyncio.run(processes())
-        speak("Вывожу все работающие программы")
+        va_speak("Вывожу все работающие программы")
     except:
         print('Error')
 
@@ -42,40 +38,36 @@ def check_process():
 
 
 def greeting():
-    speak("Привет, бро!")
-
-
-def start_pubg():
-    speak("Запускаю пубг")
+    va_speak("Привет, бро!")
 
 
 def cancel():
-    speak("Отдыхаю")
+    va_speak("Отдыхаю")
 
 
 def va_respond(voice: str):
     print('va_respond')
     print(voice)
-    if voice.startswith(config.VA_ALIAS):
+    if voice.startswith(constants.COMMAND_DICT):
         # обращаются к ассистенту
         cmd = recognize_cmd(filter_cmd(voice))
 
-        if cmd['cmd'] not in config.COMMAND_DICT.keys():
-            speaker.speak("Что?")
+        if cmd['cmd'] not in constants.COMMAND_DICT.keys():
+            speaker.va_speak("Что?")
         else:
             print(globals())
-            globals()[commands]()
+            # globals()[commands]()
 
 
 def filter_cmd(raw_voice: str):
     print('filter_cmd')
     cmd = raw_voice
 
-    for x in config.VA_ALIAS:
+    for x in constants.BOT_NAME:
         cmd = cmd.replace(x, "").strip()
 
-    for x in config.VA_TBR:
-        cmd = cmd.replace(x, "").strip()
+    # for x in config.VA_TBR:
+    #     cmd = cmd.replace(x, "").strip()
 
     return cmd
 
@@ -83,33 +75,22 @@ def filter_cmd(raw_voice: str):
 def recognize_cmd(cmd: str):
     print('recognize_cmd')
     rc = {'cmd': '', 'percent': 0}
-    for c, v in config.VA_CMD_LIST.items():
+    for command, text in constants.COMMAND_DICT.items():
 
-        for x in v:
+        for x in text:
             vrt = fuzz.ratio(cmd, x)
             if vrt > rc['percent']:
-                rc['cmd'] = c
+                rc['cmd'] = command
                 rc['percent'] = vrt
 
     return rc
 
-def main():
-    print('жду команду')
-    query = listener.listen()
-    print(f'query: {query}')
-    # if query == 'остановись':
-    #     return False
-    for commands, text in COMMAND_DICT['commands'].items():
-        print(f'text: {text}')
-        if query in text:
-            # print(f'commands: {commands}')
-            globals()[commands]()
 
-
-
+print('start')
+print(f'globals: {globals()}')
 if __name__ == '__main__':
     print('start')
-    listener.listen(va_respond())
-    # check_process()
-    # # subprocess.process_exists('calculator.exe')
-    # print('\n\n\n\n', processes)
+
+    va_speak("Привет, голосовой помошник Джарвис приступает к работе")
+
+    listener.listen_test()
