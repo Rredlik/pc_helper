@@ -58,6 +58,12 @@ def processes(close_program=None):
         print('Error: ', er)
 
 
+def sleep_windows():
+    try:
+        subprocess.call("Rundll32.exe user32.dll, LockWorkStation")
+    except:
+        va_speak('Не получилось заблокировать экран')
+
 if __name__ == '__main__':
 
     # prog = input()
