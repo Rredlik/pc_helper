@@ -1,21 +1,11 @@
-import asyncio
-import speech_recognition
-from fuzzywuzzy import fuzz
-import datetime
-# from num2t4ru import num2text
-import webbrowser
-import random
-
-import constants
 import listener
-import speaker
+from speaker import va_speak
+import constants
 from browser import *
 from processes import *
 from start_program import *
-from speaker import va_speak
 
-sr = speech_recognition.Recognizer()
-sr.pause_threshold = 0.5
+from fuzzywuzzy import fuzz
 
 
 def greeting():
@@ -26,21 +16,23 @@ def cancel():
     va_speak("Отдыхаю")
 
 
-
 def check_name(voice: str):
-    print(f"voice: {voice}")
+    # print(f"voice: {voice}")
     if voice.startswith(constants.BOT_NAME):
 
         cmd = recognize_cmd(filter_voice(voice))
-        print(constants.COMMAND_DICT['commands'].keys())
+        # print(constants.COMMAND_DICT['commands'].keys())
+        # print(f'cmd: {cmd}')
+        if cmd is None:
+            return
 
         _command_ = cmd['cmd']
 
-        print(_command_)
+        # print(_command_)
 
 
         if _command_ not in constants.COMMAND_DICT['commands'].keys():
-            speaker.va_speak("Что?")
+            va_speak("Что?")
         else:
             globals()[_command_]()
 
@@ -54,10 +46,21 @@ def filter_voice(raw_voice: str):
     for x in constants.VA_TBR:
         cmd = cmd.replace(x, "").strip()
 
+    if cmd.startswith(constants.VA_REPEAT):
+        cmd = cmd.replace(constants.VA_REPEAT, "", 1).strip()
+        try:
+            va_speak(cmd)
+        except:
+            va_speak('Нечего повторять')
+        return 'none_command'
+
     return cmd
 
 
+
 def recognize_cmd(cmd: str):
+    if cmd == 'none_command':
+        return
     rc = {'cmd': '', 'percent': 0}
     for command, text in constants.COMMAND_DICT['commands'].items():
         for x in text:
@@ -69,6 +72,6 @@ def recognize_cmd(cmd: str):
 
 
 if __name__ == '__main__':
-    # va_speak("Привет, голосовой помошник Джарвис приступает к работе")
+    va_speak("Привет, голосовой помошник Джарвис приступает к работе")
     print('start')
     listener.listen_test(check_name)
