@@ -47,7 +47,7 @@ def listen(callback):
             #     print(rec.PartialResult())
 
 
-def listen_test():
+def listen_test(callback):
 
     with sd.RawInputStream(samplerate=samplerate,
                            blocksize=8000,
@@ -59,9 +59,9 @@ def listen_test():
         while True:
             data = q.get()
             if rec.AcceptWaveform(data):
-                print(json.loads(rec.Result())["text"])
-            else:
-                print(rec.PartialResult())
+                callback(json.loads(rec.Result())["text"])
+            # else:
+            #     print(rec.PartialResult())
 
 
 if __name__ == "__main__":

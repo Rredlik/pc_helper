@@ -27,7 +27,7 @@ def va_speak(text: str):
                              put_accent=put_accent,
                              put_yo=put_yo)
     sd.play(_audio, sample_rate)
-    time.sleep(len(_audio) / (sample_rate / 2))
+    time.sleep(len(_audio) / sample_rate)
     sd.stop()
 
 
