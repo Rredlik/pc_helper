@@ -1,7 +1,6 @@
 import subprocess
 
-from processes import processes
-from speaker import va_speak
+from va_module.speaker import va_speak
 
 STEAM_LINK = "start steam://rungameid/"
 

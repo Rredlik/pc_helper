@@ -1,9 +1,8 @@
 import asyncio
-import os
 import subprocess
 import wmi
 
-from speaker import va_speak
+from va_module.speaker import va_speak
 
 PRIORITY_PROGRAMS = ['Calculator.exe']
 

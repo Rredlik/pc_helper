@@ -1,8 +1,7 @@
 import os
-import subprocess
 
-from constants import BROWTHER_PATH
-from speaker import va_speak
+from cmd_module.constants import BROWTHER_PATH
+from va_module.speaker import va_speak
 
 
 def start_browser():

@@ -1,11 +1,8 @@
-import listener
-from speaker import va_speak
-import constants
-from browser import *
-from processes import *
-from start_program import *
-
 from fuzzywuzzy import fuzz
+
+from va_module import listener
+from va_module.speaker import va_speak
+from cmd_module import constants
 
 
 def greeting():
@@ -29,7 +26,6 @@ def check_name(voice: str):
         _command_ = cmd['cmd']
 
         # print(_command_)
-
 
         if _command_ not in constants.COMMAND_DICT['commands'].keys():
             va_speak("Что?")
@@ -55,7 +51,6 @@ def filter_voice(raw_voice: str):
         return 'none_command'
 
     return cmd
-
 
 
 def recognize_cmd(cmd: str):
