@@ -3,6 +3,11 @@ from fuzzywuzzy import fuzz
 from va_module import listener
 from va_module.speaker import va_speak
 from cmd_module import constants
+from cmd_module.processes import *
+from cmd_module.start_program import *
+from cmd_module.browser import *
+from cmd_module.telegram_api import *
+
 
 
 def greeting():
@@ -14,10 +19,10 @@ def cancel():
 
 
 def check_name(voice: str):
-    # print(f"voice: {voice}")
+    print(f"voice: {voice}")
     if voice.startswith(constants.BOT_NAME):
-
-        cmd = recognize_cmd(filter_voice(voice))
+        raw_voice = filter_voice(voice)
+        cmd = recognize_cmd(raw_voice)
         # print(constants.COMMAND_DICT['commands'].keys())
         # print(f'cmd: {cmd}')
         if cmd is None:
@@ -30,7 +35,11 @@ def check_name(voice: str):
         if _command_ not in constants.COMMAND_DICT['commands'].keys():
             va_speak("Что?")
         else:
-            globals()[_command_]()
+            try:
+                globals()[_command_]()
+            except TypeError:
+                globals()[_command_](raw_voice)
+
 
 
 def filter_voice(raw_voice: str):
