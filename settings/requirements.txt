@@ -1,0 +1,6 @@
+fuzzywuzzy
+torch
+sounddevice
+wmi
+vosk
+wheel
