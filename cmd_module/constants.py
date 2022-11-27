@@ -13,7 +13,10 @@ AI_AV = {
         },
         'VA_INTENTION_OPEN': {
             'command': ['открой', 'открыть'],
-            'action': ''
+            'action': {
+                'start_browser': ['браузер', 'яндекс'],
+                'start_vkcom': ['вк', 'вконтакте', 'в контакте'],
+            }
         },
 
         'VA_INTENTION_START': {
@@ -29,7 +32,9 @@ AI_AV = {
         },
         'VA_INTENTION_ANSWER': {
             'command': ['сколько', ],
-            'action': ''
+            'action': {
+                'start_pubg': ['время', ]
+            }
         },
         'VA_INTENTION_SEND': {
             'command': ['отправь', 'напиши'],
